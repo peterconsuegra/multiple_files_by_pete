@@ -1,0 +1,173 @@
+<%size_limit ||= 50 %>
+<%table_name =  model.class.table_name%>
+<%delete_route = "#{table_name}_pete_file_destroy"%>
+<%upload_route = "#{table_name}_pete_file_upload"%>
+
+<script>
+	
+	function delete_pete_file_logic(){
+		
+		$(".delete_file").click(function() {
+  	  
+		  	pete_file_id = $(this).attr("pete_file_id");
+	  
+			$.ajax({
+				url: "/<%=delete_route%>",
+				dataType: 'JSON',
+				type: 'POST',
+				data: {pete_file_id: pete_file_id, authenticity_token: "<%=form_authenticity_token%>"},
+				success : function(data) {
+					$("#pete_file_"+data.id).remove();
+				}		
+			});	
+	  
+		});
+		
+	}
+	
+	
+	function moveprogressbar(percentage,div_id) {
+	  var elem = document.getElementById(div_id);   
+	  var width = 10;
+	 // elem.style.backgroundColor = "blue";
+      elem.style.width = percentage + '%'; 
+      //elem.innerHTML = percentage * 1  + '%';
+	}
+	
+	
+	function progressFunction(i,evt){  
+		
+		console.log("addEventListener progress")
+		console.log("i: "+ i)
+		
+		if (evt.lengthComputable) {
+		      var percentComplete = evt.loaded / evt.total;
+		      //Do something with upload progress
+		      console.log(percentComplete);
+			  percente_value = percentComplete * 100;
+			  moveprogressbar(percente_value,"myBar_"+i);
+		}
+	 }  
+	 
+	
+	$('.upload_brief_file').each(function () {
+		
+		//Se cargan a esta funciones para cada uploader del brief
+	
+		var uploadField =  $(this).find('input')[0];
+		console.log("upload_brief_file");
+		
+		$(uploadField).on('change', function (e) {
+			
+			var xhr_array = [];
+			var xhr_timestamps = [];
+			section = $(this).attr("section");
+			
+		    for (var i = 0; i < $(this).get(0).files.length; ++i) {
+		       
+			console.log($(this).get(0).files[i].name);
+		    file_title = $(this).get(0).files[i].name;
+			
+			var fileNameOriginal = $(this).get(0).files[i].name;
+			var fileinput = $(this).get(0).files[i];
+			
+			var d = new Date();
+			var timestamp = d.getTime();
+			
+			var iSize = ($(this)[0].files[i].size / 1024);
+            iSize = (Math.round((iSize / 1024) * 100) / 100)
+			
+			if(iSize<=<%=size_limit%>){
+				//var oform = new FormData($(this).parent('form')[0]);
+				
+				console.log("size: "+iSize)
+				
+				var oform = new FormData();
+				
+				oform.append("attachable_id", "<%=model.id%>");
+				oform.append("attachable_type", "<%=model.class.name%>");
+				oform.append("section", section);
+				oform.append("authenticity_token", "<%=form_authenticity_token%>");
+				oform.append("file", fileinput);
+				oform.append("timestamp", timestamp);
+				oform.append("title", file_title);
+			
+			
+			  upload_progress_html = "";
+			   upload_progress_html += '<div class="row">';
+			  upload_progress_html += '<div class="col-md-6">';
+			  upload_progress_html += '<div id ="progress_container_'+timestamp+'">';
+			  upload_progress_html += '<label>'+fileNameOriginal+'</label>';
+			  upload_progress_html += '<div class="progress">';
+			  upload_progress_html += '<div class="progress-bar" id="myBar_'+timestamp+'" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">';
+			  upload_progress_html += '</div>';
+			  upload_progress_html += '</div>';
+			  upload_progress_html += '</div>';
+			  upload_progress_html += '</div>';
+			  upload_progress_html += '</div>';
+			
+	
+				$("#upload_brief_area").prepend(upload_progress_html);
+				
+				$.ajax({
+				   xhr: function()
+				    {
+						 console.log("entro en xhr")
+				      xhr_array[i] = new window.XMLHttpRequest();
+					  
+				      //Upload progress
+				      xhr_array[i].upload.addEventListener("progress",progressFunction.bind(null, timestamp), false);
+				      //Download progress
+					 
+				      xhr_array[i].addEventListener("progress", function(evt){
+				        if (evt.lengthComputable) {
+							
+							
+				          var percentComplete = evt.loaded / evt.total;
+				          //Do something with download progress
+						  console.log("Download")
+				          console.log(percentComplete,"myBar_"+xhr_timestamps[i]);
+						  
+				        }
+				      }, false);
+					
+					 
+					return xhr_array[i];
+					  
+				    },
+					url: "/<%=upload_route%>",
+					data: oform,
+					dataType: 'html',
+					method: 'post',
+					cache: false,
+					contentType: false,
+					processData: false,
+					fail: function (dat) {
+						console.log(dat);
+						console.log("fallo!");
+					},
+					success: function (data) {
+						
+						parsedjson = JSON.parse(data);
+						$("#progress_container_"+parsedjson["timestamp"]).remove();
+						delete_link=" <a pete_file_id='"+parsedjson["pete_file"].id+"' style='color:red' class='delete_file' href='#'>X</a>"
+						id="id='pete_file_"+parsedjson["pete_file"].id+"'";
+						$("#section_"+parsedjson["pete_file"].section).append("<li "+id+">"+parsedjson["file_a"]+delete_link+"</li>")
+						delete_pete_file_logic();
+					}
+						
+				});						
+			}else{
+				alert("File: "+fileNameOriginal+" is bigger than 50MB")
+				return false
+			}
+			
+			}
+			
+		});
+		
+	});
+	
+	delete_pete_file_logic();
+	
+</script>

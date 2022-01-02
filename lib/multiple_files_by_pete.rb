@@ -6,3 +6,6 @@ module MultipleFilesByPete
   class Error < StandardError; end
   # Your code goes here...
 end
+
+
+require_relative "railtie" if defined?(Rails::Railtie)
