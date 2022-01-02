@@ -8,12 +8,12 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Pedro Consuegra"]
   spec.email         = ["pedroconsuegrat@gmail.com"]
 
-  spec.summary       = "An agile way to implement multiple files support in your ruby on rails scaffold"
-  spec.description   = "An agile way to implement multiple files your ruby on rails scaffold, without the need to create additional tables"
+  spec.summary       = "An agile way to implement multiple files uploads in your ruby on rails scaffold"
+  spec.description   = "An agile way to implement multiple files uploads in ruby on rails scaffold, without the need to create additional tables"
   spec.homepage      = "https://rubygems.org/gems/multiple_files_by_pete"
   spec.required_ruby_version = ">= 2.4.0"
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'https://mygemserver.com'"
+  spec.metadata["allowed_push_host"] = "https://rubygems.org/"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "https://github.com/peterconsuegra/multiple_files_by_pete"
