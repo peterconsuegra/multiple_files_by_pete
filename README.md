@@ -30,49 +30,55 @@ Let's create a example for a Place scaffold:
 rails new myapp --database=postgresql
 ```
 
-2. Go to your application's directory in Terminal and run the command:
+2. Create the database:
+
+```ruby
+bundle exec rake db:create
+```
+
+3. Go to your application's directory in Terminal and run the command:
 
 ```ruby
 bundle exec rails g scaffold Place name:string description:text
 ```
 
-3. Add this line to your application's Gemfile:
+4. Add this line to your application's Gemfile:
 
 ```ruby
 gem 'multiple_files_by_pete'
 ```
 
-4. Go to your application's directory in Terminal and run:
+5. Go to your application's directory in Terminal and run:
 
 ```ruby
 bundle install
 ```
 
-5. Go to your application's directory in Terminal and run the installation command for mutiple_files_by_pete:
+6. Go to your application's directory in Terminal and run the installation command for mutiple_files_by_pete:
 
 ```ruby
 bundle exec rake 'multiple_files_by_pete[place]'
 ```
 
-6. Add jQuery to your layout file:
+7. Add jQuery to your layout file:
 
 ```html
 <script src='/multiple_files_by_pete/jquery-3.6.0.min.js'></script>
 ```
 
-7. Add bootstrap.min.css to your layout file:
+8. Add bootstrap.min.css to your layout file:
 
 ```html
 <link rel="stylesheet" href="/multiple_files_by_pete/bootstrap.min.css">
 ```
 
-8. Copy and paste this code to get all the object files. For this example paste it in the edit action of the places_controller.rb file
+9. Copy and paste this code to get all the object files. For this example paste it in the edit action of the places_controller.rb file
 
 ```ruby
 @files = PeteFile.get_object_files(@place)
 ```
 
-9. Copy paste this code for each file field you need, you can add as many as you want by changing the section variable. For this example paste it into the /places/_form.html.erb file:
+10. Copy paste this code for each file field you need, you can add as many as you want by changing the section variable. For this example paste it into the /places/_form.html.erb file:
 
 ```ruby
 
@@ -82,7 +88,7 @@ bundle exec rake 'multiple_files_by_pete[place]'
 
 ```
 
-10. Copy and paste this code at the end of the form where you have added the file fields. The size limit is in MB. For this example paste it in the file /places/_form.html.erb:
+11. Copy and paste this code at the end of the form where you have added the file fields. The size limit is in MB. For this example paste it in the file /places/_form.html.erb:
 
 ```ruby
 <%= render 'shared/files_by_pete_js', model: @place, size_limit: 50%>
