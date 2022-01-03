@@ -36,31 +36,43 @@ rails new myapp --database=postgresql
 bundle exec rails g scaffold Place name:string description:text
 ```
 
-3. Go to your application's directory in Terminal and run the installation command for mutiple_files_by_pete:
+3. Add this line to your application's Gemfile:
+
+```ruby
+gem 'multiple_files_by_pete'
+```
+
+4. Go to your application's directory in Terminal and run:
+
+```ruby
+bundle install
+```
+
+5. Go to your application's directory in Terminal and run the installation command for mutiple_files_by_pete:
 
 ```ruby
 bundle exec rake 'multiple_files_by_pete[place]'
 ```
 
-4. Add jQuery to your layout file:
+6. Add jQuery to your layout file:
 
 ```html
 <script src='/multiple_files_by_pete/jquery-3.6.0.min.js'></script>
 ```
 
-5. Add bootstrap.min.css to your layout file:
+7. Add bootstrap.min.css to your layout file:
 
 ```html
 <link rel="stylesheet" href="/multiple_files_by_pete/bootstrap.min.css">
 ```
 
-6. Get all the files of that model in the action of the controller you are want:
+8. Get all the files of that model in the action of the controller you are want:
 
 ```ruby
 @files = PeteFile.get_object_files(@place)
 ```
 
-7. Add the number of fields to upload files you need to your _form.html.erb file:
+9. Add the number of fields to upload files you need to your _form.html.erb file:
 
 ```ruby
 
@@ -70,7 +82,7 @@ bundle exec rake 'multiple_files_by_pete[place]'
 
 ```
 
-8. Add the JS logic for multiple_file_by_pete to your _form.html.erb file. The size limit is in MB:
+10. Add the JS logic for multiple_file_by_pete to your _form.html.erb file. The size limit is in MB:
 
 ```ruby
 <%= render 'shared/files_by_pete_js', model: @place, size_limit: 50%>
