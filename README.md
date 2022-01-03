@@ -94,6 +94,14 @@ bundle exec rake 'multiple_files_by_pete[place]'
 <%= render 'shared/files_by_pete_js', model: @place, size_limit: 50%>
 ```
 
+Video Tutorial
+===============
+
+Watch this video to see how it works
+
+[![IMAGE ALT TEXT HERE](https://raw.githubusercontent.com/peterconsuegra/multiple_files_by_pete/master/templates/multiple_files_by_pete.png)](https://www.youtube.com/watch?v=Oy5W9dalN9M)
+
+
 
 ## Contributing
 
