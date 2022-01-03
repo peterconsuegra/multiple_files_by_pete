@@ -62,7 +62,7 @@ bundle exec rake 'multiple_files_by_pete[place]'
 
 7. Add the number of fields to upload files you need to your _form.html.erb file:
 
-```html
+```ruby
 
 <%= render partial: 'shared/files_by_pete', locals: {model: @place, files: @files, section: 'legal_files' ,label: 'Upload legal files'}  %>
 
@@ -72,7 +72,7 @@ bundle exec rake 'multiple_files_by_pete[place]'
 
 8. Add the JS logic for multiple_file_by_pete to your _form.html.erb file. The size limit is in MB:
 
-```html
+```ruby
 <%= render 'shared/files_by_pete_js', model: @place, size_limit: 50%>
 ```
 
