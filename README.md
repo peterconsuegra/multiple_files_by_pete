@@ -1,8 +1,7 @@
-# MultipleFilesByPete
+# Multiple Files By Pete
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/multiple_files_by_pete`. To experiment with that code, run `bin/console` for an interactive prompt.
+An agile way to implement multiple files uploads in ruby on rails scaffold, without the need to create additional tables
 
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
@@ -16,19 +15,67 @@ And then execute:
 
     $ bundle install
 
-Or install it yourself as:
+## Support
 
-    $ gem install multiple_files_by_pete
+Ruby On Rails: 5, 6, 7
+
+This gem does not work with SQLite database
 
 ## Usage
+Let's create a example for a Place scaffold:
 
-TODO: Write usage instructions here
+1. rails new myapp --database=postgresql
 
-## Development
+```ruby
+rails new myapp --database=postgresql
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+2. Go to your application's directory in Terminal and run the command:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+bundle exec rails g scaffold Place name:string description:text
+```
+
+3. Go to your application's directory in Terminal and run the installation command for mutiple_files_by_pete:
+
+```ruby
+bundle exec rake 'multiple_files_by_pete[place]'
+```
+
+4. Add jQuery to your layout file:
+
+```html
+<script src='/multiple_files_by_pete/jquery-3.6.0.min.js'></script>
+```
+
+5. Add bootstrap.min.css to your layout file:
+
+```html
+<link rel="stylesheet" href="/multiple_files_by_pete/bootstrap.min.css">
+```
+
+6. Get all the files of that model in the action of the controller you are want:
+
+```ruby
+@files = PeteFile.get_object_files(@place)
+```
+
+7. Add the number of fields to upload files you need to your _form.html.erb file:
+
+```html
+
+<%= render partial: 'shared/files_by_pete', locals: {model: @place, files: @files, section: 'legal_files' ,label: 'Upload legal files'}  %>
+
+<%= render partial: 'shared/files_by_pete', locals: {model: @place, files: @files, section: 'extra_files' ,label: 'Upload extra files'}  %>
+
+```
+
+8. Add the JS logic for multiple_file_by_pete to your _form.html.erb file. The size limit is in MB:
+
+```html
+<%= render 'shared/files_by_pete_js', model: @place, size_limit: 50%>
+```
+
 
 ## Contributing
 
