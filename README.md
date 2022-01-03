@@ -24,7 +24,7 @@ This gem does not work with SQLite database
 ## Usage
 Let's create a example for a Place scaffold:
 
-1. rails new myapp --database=postgresql
+1. Let's create a new rails app:
 
 ```ruby
 rails new myapp --database=postgresql
@@ -66,13 +66,13 @@ bundle exec rake 'multiple_files_by_pete[place]'
 <link rel="stylesheet" href="/multiple_files_by_pete/bootstrap.min.css">
 ```
 
-8. Get all the files of that model in the action of the controller you are want:
+8. Copy and paste this code to get all the object files. For this example paste it in the edit action of the places_controller.rb file
 
 ```ruby
 @files = PeteFile.get_object_files(@place)
 ```
 
-9. Add the number of fields to upload files you need to your _form.html.erb file:
+9. Copy paste this code for each file field you need, you can add as many as you want by changing the section variable. For this example paste it into the /places/_form.html.erb file:
 
 ```ruby
 
@@ -82,7 +82,7 @@ bundle exec rake 'multiple_files_by_pete[place]'
 
 ```
 
-10. Add the JS logic for multiple_file_by_pete to your _form.html.erb file. The size limit is in MB:
+10. Copy and paste this code at the end of the form where you have added the file fields. The size limit is in MB. For this example paste it in the file /places/_form.html.erb:
 
 ```ruby
 <%= render 'shared/files_by_pete_js', model: @place, size_limit: 50%>
