@@ -1,6 +1,6 @@
 # Ruby On Rails multiple files by Pete
 
-An agile way to implement multiple files uploads in Ruby On Rails scaffold without the need to create additional tables
+An agile way to implement multiple files uploads in a Ruby On Rails scaffold without the need to create additional tables
 
 
 ## Installation

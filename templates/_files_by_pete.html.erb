@@ -1,32 +1,31 @@
-
 <%if model.persisted?%>
 
-<%
-attachable_id = model.id 
-attachable_type = model.class.name
-uniqid= rand(36**8).to_s(36)
-section_files = files[section]
-
-%>
-
-<div id="upload_brief_area" class="upload_brief_file">
+	<%
+	attachable_id = model.id 
+	attachable_type = model.class.name
+	uniqid= rand(36**8).to_s(36)
+	section_files = files[section]
 	
-	<p style="margin-bottom: 10px;margin-top:30px "><%=label%> </p>
+	%>
 	
-	<ul id="section_<%=section%>" style="margin-left: 20px">
-	<%unless section_files.nil?%>
-	<% section_files.each do |pete_file| %>
-		<li id="pete_file_<%=pete_file.id%>"><%=pete_file.get_file_a.html_safe%> <a pete_file_id="<%=pete_file.id%>" style="color:red" class="delete_file" href="#">X</a></li>
-	<%end%>
-	<%end%>
-	</ul>
+	<div class ="row">
+		<div class="col-12 mt-3 mb-3">
+			<div id="upload_brief_area" class="upload_brief_file">
+		
+				<p style="margin-bottom: 10px;margin-top:30px "><%=label%> </p>
+		
+				<ul id="section_<%=section%>" style="margin-left: 20px">
+					<%unless section_files.nil?%>
+					<% section_files.each do |pete_file| %>
+					<li id="pete_file_<%=pete_file.id%>"><%=pete_file.get_file_a.html_safe%> <a pete_file_id="<%=pete_file.id%>" style="color:red" class="delete_file" href="#">X</a></li>
+					<%end%>
+					<%end%>
+				</ul>
+			
+				<input type="file" id="<%=uniqid%>" section="<%=section%>" name="file" class="Uploadid" multiple="">
 	
-	<form action="/upload_files_by_pete" method="POST" class="form-horizontal frm-logoUpload" enctype="multipart/form-data">
-	
-		<input type="file" id="<%=uniqid%>" section="<%=section%>" name="file" class="Uploadid" multiple="">
-	
-	</form>
-
-</div>
+			</div>
+		</div>
+	</div>
 
 <%end%>
