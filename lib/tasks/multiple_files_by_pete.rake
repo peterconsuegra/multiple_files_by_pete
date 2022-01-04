@@ -1,12 +1,13 @@
 require_relative '../peterconsuegra_recipes'
+require 'colorize'
 
-#bundle exec rake 'multiple_files_by_pete[place]'
+#bundle exec rake 'multiple_files_by_pete[model]'
 
 desc 'install multiple_files_by_pete required files'
 
 task :multiple_files_by_pete, [:model] do |t, args|
   
-  #Require all app models
+  #Require all models
   Dir.glob("#{Rails.root}/app/models/*.rb").each { |file| require file }
   
   #Base routes
@@ -20,18 +21,18 @@ task :multiple_files_by_pete, [:model] do |t, args|
   #Adding partials
   PeterConsuegraRecipes::move_templates(src_folder,"#{rails_app_folder}/app/views/shared/",["_files_by_pete_js.html.erb","_files_by_pete.html.erb"])
   
-  #Adding concern
+  #Adding concern file
   PeterConsuegraRecipes::move_template(src_folder,"#{rails_app_folder}/app/controllers/concerns/","files_by_pete.rb")
   
-  #Adding route to routes.rb 
+  #Adding js and css assets
+  PeterConsuegraRecipes::move_templates(src_folder,"#{rails_app_folder}/public/multiple_files_by_pete/",["jquery-3.6.0.min.js","bootstrap.min.css"])
+  
+  #Adding route
   PeterConsuegraRecipes::add_route(hash['base_route'],"pete_file_upload","post")
   PeterConsuegraRecipes::add_route(hash['base_route'],"pete_file_destroy","post")
   
   #Adding concern to controller
   PeterConsuegraRecipes::add_concern_to_controller("include FilesByPete\n",hash['controller_file'],hash['controller_class'])
-  
-  #Adding layouts files
-  PeterConsuegraRecipes::move_templates(src_folder,"#{rails_app_folder}/public/multiple_files_by_pete/",["jquery-3.6.0.min.js","bootstrap.min.css"])
   
   puts "-----------------------------------------".red
   puts "Copy and paste this code in your project".red
@@ -47,9 +48,13 @@ task :multiple_files_by_pete, [:model] do |t, args|
   puts "<%= render partial: 'shared/files_by_pete', locals: {model: @#{args[:model]}, files: @files, section: 'extra_files' ,label: 'Upload extra files'}  %>".red
   puts "Add the JS logic for multiple_file_by_pete to your _form.html.erb file:".red
   puts "<%= render 'shared/files_by_pete_js', model: @#{args[:model]}, size_limit: 50%>".red
- 
+  
+  puts "Running command:".blue
+  puts "rails g model PeteFile section:string attachable_id:integer attachable_type:string name:string".green
   `rails g model PeteFile section:string attachable_id:integer attachable_type:string name:string`
   sleep 2
+  puts "Running command:".blue
+  puts "rake db:migrate".green
   `rake db:migrate`
   
   #Adding model pete_file.rb

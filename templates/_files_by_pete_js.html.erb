@@ -107,7 +107,7 @@
 			  upload_progress_html += '</div>';
 			
 	
-				$("#upload_brief_area").prepend(upload_progress_html);
+				$("#upload_brief_area_"+section).prepend(upload_progress_html);
 				
 				$.ajax({
 				   xhr: function()
