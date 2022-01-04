@@ -54,7 +54,7 @@ gem 'multiple_files_by_pete'
 bundle install
 ```
 
-6. Go to your application's directory in Terminal and run the installation command for mutiple_files_by_pete:
+6. 6. Go to the application directory in Terminal and run the following command to install the necessary code and files from the gem:
 
 ```ruby
 bundle exec rake 'multiple_files_by_pete[place]'
